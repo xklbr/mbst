@@ -22,7 +22,7 @@ const Card = styled(Link)`
   text-decoration: none;
   width: 344px;
 
-  @media (hover: hover) {
+  @media (hover: hover) and (min-width: 768px) {
     &::before {
       background: #000000;
       bottom: 0;
