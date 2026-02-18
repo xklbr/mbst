@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MBST App
 
-## Getting Started
+Smartphone catalog challenge built with Next.js 16, React 19, TypeScript, and Styled Components.
 
-First, run the development server:
+## Setup
 
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+```
+2. Create env file from template:
+```bash
+cp .env.example .env.local
+```
+3. Set required env values in `.env.local`:
+- `API_BASE_URL`
+- `API_KEY`
+  - API docs: `https://prueba-tecnica-api-tienda-moviles.onrender.com/docs/`
+
+4. Run development server:
+```bash
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `pnpm dev` - start development server
+- `pnpm build` - production build
+- `pnpm start` - run production server
+- `pnpm lint` - lint checks
+- `pnpm test` - run unit test suite
+- `pnpm test:watch` - run tests in watch mode
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Architecture
 
-## Learn More
+This project follows a screaming architecture (feature-first):
 
-To learn more about Next.js, take a look at the following resources:
+- `src/features/catalog` - list/search flow
+- `src/features/phone-detail` - detail/variants/similar products flow
+- `src/features/cart` - cart state, persistence, and cart UI
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Shared layers:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `src/components/*` - shared UI/layout components
+- `src/lib/*` - shared infra/utilities (API client, env, formatters)
+- `src/styles/*` - global styles and styled-components SSR registry
+- `src/app/*` - route adapters only
 
-## Deploy on Vercel
+## Import Boundaries
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Use feature public APIs (`src/features/<feature>/index.ts`) for cross-feature imports.
+- Keep route files in `src/app/*` thin and delegate logic to features.
+- Keep reusable, non-domain-specific UI in `src/components/*`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Data Layer Notes
+
+- API requests go through `src/lib/api/client.ts`.
+- Every request includes `x-api-key` from env.
+- Locked endpoints from current API docs:
+  - `GET /products` with `search`, `limit`, `offset`
+  - `GET /products/{id}`
+- Catalog/detail services map backend DTOs to feature domain models.
+- If API env is missing or the API fails, the UI renders explicit error states.
+
+## State Management
+
+- Cart state is managed with React Context + reducer in `src/features/cart/store`.
+- Cart persists to `localStorage` with hydration guard to avoid wiping saved cart on initial mount.
+
+## Current Scope
+
+Implemented:
+
+- Catalog page with search query in URL and result count.
+- Phone detail page with storage/color selectors, dynamic price, add-to-cart enablement.
+- Similar products list powered by API `similarProducts`.
+- Cart page with persisted items, remove action, total on pay CTA, continue shopping.
+
+Pending/iterative:
+
+- Full visual parity refinements against final Figma measurements/states.
+- Expand tests with more integration coverage and optional E2E.
