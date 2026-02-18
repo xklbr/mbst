@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 
-import { CartProvider } from "@features/cart";
-import { GlobalStyle } from "@styles/global-style";
-import StyledComponentsRegistry from "@styles/styled-components-registry";
+import { env } from "@config/env";
+import { CartProvider } from "@modules/cart";
+import { GlobalStyle } from "@shared/styles/global-style";
+import StyledComponentsRegistry from "@shared/styles/styled-components-registry";
 
 export const metadata: Metadata = {
-  title: "MBST App",
-  description: "Smartphone catalog challenge",
+  title: env.NEXT_PUBLIC_APP_NAME,
+  description: env.NEXT_PUBLIC_APP_DESCRIPTION,
 };
 
 export default function RootLayout({

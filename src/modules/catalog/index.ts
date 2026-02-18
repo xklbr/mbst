@@ -1,0 +1,3 @@
+export { CatalogView } from "./components/catalog-view";
+export type { CatalogPhone, CatalogQuery, CatalogResult } from "./types/catalog.types";
+export { getPhones } from "./lib/catalog-api";

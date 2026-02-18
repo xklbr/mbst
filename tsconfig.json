@@ -21,10 +21,9 @@
     ],
     "paths": {
       "@/*": ["src/*"],
-      "@features/*": ["src/features/*"],
-      "@components/*": ["src/components/*"],
-      "@lib/*": ["src/lib/*"],
-      "@styles/*": ["src/styles/*"]
+      "@config/*": ["src/config/*"],
+      "@modules/*": ["src/modules/*"],
+      "@shared/*": ["src/shared/*"]
     }
   },
   "include": [

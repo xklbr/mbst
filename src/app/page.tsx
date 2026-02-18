@@ -1,4 +1,4 @@
-import { CatalogPage } from "@features/catalog";
+import { CatalogView } from "@modules/catalog";
 
 type HomeRouteProps = {
   searchParams: Promise<{
@@ -9,5 +9,5 @@ type HomeRouteProps = {
 export default async function HomeRoute({ searchParams }: HomeRouteProps) {
   const { search } = await searchParams;
 
-  return <CatalogPage search={search} />;
+  return <CatalogView search={search} />;
 }

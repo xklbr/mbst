@@ -1,4 +1,4 @@
-import { PhoneDetailPage } from "@features/phone-detail";
+import { PhoneDetailView } from "@modules/phone-detail";
 
 type PhoneDetailRouteProps = {
   params: Promise<{ id: string }>;
@@ -7,5 +7,5 @@ type PhoneDetailRouteProps = {
 export default async function PhoneDetailRoute({ params }: PhoneDetailRouteProps) {
   const { id } = await params;
 
-  return <PhoneDetailPage phoneId={id} />;
+  return <PhoneDetailView phoneId={id} />;
 }

@@ -1,5 +1,5 @@
-import { CartPage } from "@features/cart";
+import { CartView } from "@modules/cart";
 
 export default function CartRoute() {
-  return <CartPage />;
+  return <CartView />;
 }
