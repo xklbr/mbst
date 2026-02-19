@@ -1,28 +1,29 @@
 export const theme = {
   colors: {
-    bg: "#ffffff",
-    text: "#1b1b1b",
-    mutedText: "#666666",
-    border: "#e5e7eb",
-    card: "#f8fafc",
-    primary: "#000000",
-    primaryText: "#ffffff",
-    danger: "#df0000",
+    bg: "var(--color-bg)",
+    text: "var(--color-text)",
+    mutedText: "var(--color-muted-text)",
+    border: "var(--color-border)",
+    card: "var(--color-card)",
+    primary: "var(--color-primary)",
+    primaryText: "var(--color-primary-text)",
+    danger: "var(--color-danger)",
   },
   spacing: {
-    xs: "0.5rem",
-    sm: "0.75rem",
-    md: "1rem",
-    lg: "1.5rem",
-    xl: "2rem",
+    xs: "var(--spacing-xs)",
+    sm: "var(--spacing-sm)",
+    md: "var(--spacing-md)",
+    lg: "var(--spacing-lg)",
+    xl: "var(--spacing-xl)",
   },
   fontSize: {
-    xs: "0.625rem",   // 10px
-    sm: "0.75rem",    // 12px
-    md: "0.875rem",   // 14px
-    base: "1rem",     // 16px
-    lg: "1.25rem",    // 20px
+    xs: "var(--font-size-xs)",
+    sm: "var(--font-size-sm)",
+    md: "var(--font-size-md)",
+    base: "var(--font-size-base)",
+    lg: "var(--font-size-lg)",
   },
+  // Raw values required — CSS custom properties cannot be used in @media queries
   breakpoints: {
     mobile: "393px",
     tablet: "768px",
@@ -30,14 +31,14 @@ export const theme = {
     largeDesktop: "1200px",
   },
   layout: {
-    navbarHeightMobile: "3.5rem",
-    navbarHeightDesktop: "5.3125rem",
-    containerPaddingMobile: "1.25rem",
-    containerPaddingDesktop: "6.25rem",
-    containerMaxWidth: "1200px",
+    navbarHeightMobile: "var(--navbar-height-mobile)",
+    navbarHeightDesktop: "var(--navbar-height-desktop)",
+    containerPaddingMobile: "var(--container-padding-mobile)",
+    containerPaddingDesktop: "var(--container-padding-desktop)",
+    containerMaxWidth: "var(--container-max-width)",
   },
   borders: {
-    thin: "0.5px solid #000000",
+    thin: "var(--border-thin)",
   },
   frames: {
     mobile: { width: 393, height: 852 },

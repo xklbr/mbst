@@ -96,8 +96,6 @@ export async function CatalogView({ search = "" }: CatalogViewProps) {
       search: normalizedSearch || undefined,
     });
 
-    console.log(response);
-
     phones = response.items;
     total = response.total;
   } catch (error) {
