@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { media, theme } from "@shared/styles";
@@ -40,6 +41,34 @@ const SimilarCarouselWrap = styled.div`
   }
 `;
 
+/* Custom scrollbar for Safari (mobile/tablet): track + thumb that moves with scroll */
+const ScrollbarTrack = styled.div`
+  background: #cccccc;
+  height: 2px;
+  margin-right: 1.25rem;
+  margin-top: 0.5rem;
+  position: relative;
+  overflow: hidden;
+
+  ${media.tabletUp} {
+    margin-right: 2rem;
+  }
+
+  ${media.desktopUp} {
+    display: none;
+  }
+`;
+
+const ScrollbarThumb = styled.div<{ $left: number; $width: number }>`
+  background: ${theme.colors.primary};
+  height: 100%;
+  left: ${({ $left }) => $left}%;
+  position: absolute;
+  top: 0;
+  transition: left 0.08s ease-out;
+  width: ${({ $width }) => $width}%;
+`;
+
 const SimilarGrid = styled.ul`
   display: flex;
   flex-wrap: nowrap;
@@ -56,9 +85,11 @@ const SimilarGrid = styled.ul`
     padding-right: 2rem;
   }
 
+  /* Desktop: native scrollbar (track + thumb) */
   &::-webkit-scrollbar {
     display: block;
     height: 1px;
+    -webkit-appearance: none;
   }
 
   &::-webkit-scrollbar-track {
@@ -75,6 +106,13 @@ const SimilarGrid = styled.ul`
   &::-webkit-scrollbar-thumb {
     background: ${theme.colors.primary};
     border-radius: 0;
+  }
+
+  /* Mobile/tablet: hide native scrollbar so only ScrollbarTrackLine shows (Safari doesn't paint it) */
+  @media (max-width: 1023px) {
+    &::-webkit-scrollbar {
+      height: 0;
+    }
   }
 `;
 
@@ -216,13 +254,43 @@ type SimilarItemsCarouselProps = {
 };
 
 export function SimilarItemsCarousel({ phones }: SimilarItemsCarouselProps) {
+  const gridRef = useRef<HTMLUListElement>(null);
+  const [thumb, setThumb] = useState({ left: 0, width: 100 });
+
+  const updateThumb = useCallback(() => {
+    const el = gridRef.current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    const maxScroll = scrollWidth - clientWidth;
+    if (maxScroll <= 0) {
+      setThumb({ left: 0, width: 100 });
+      return;
+    }
+    const widthPercent = (clientWidth / scrollWidth) * 100;
+    const leftPercent = (scrollLeft / maxScroll) * (100 - widthPercent);
+    setThumb({ left: leftPercent, width: widthPercent });
+  }, []);
+
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
+    updateThumb();
+    el.addEventListener("scroll", updateThumb);
+    const ro = new ResizeObserver(updateThumb);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener("scroll", updateThumb);
+      ro.disconnect();
+    };
+  }, [phones.length, updateThumb]);
+
   if (phones.length === 0) return null;
 
   return (
     <SimilarSection>
       <SimilarTitle>{t.phoneDetail.similarItems}</SimilarTitle>
       <SimilarCarouselWrap>
-        <SimilarGrid>
+        <SimilarGrid ref={gridRef}>
           {phones.map((item) => (
             <SimilarCard key={item.id}>
               <SimilarLink href={`/phones/${item.id}`}>
@@ -253,6 +321,9 @@ export function SimilarItemsCarousel({ phones }: SimilarItemsCarouselProps) {
             </SimilarCard>
           ))}
         </SimilarGrid>
+        <ScrollbarTrack aria-hidden="true">
+          <ScrollbarThumb $left={thumb.left} $width={thumb.width} />
+        </ScrollbarTrack>
       </SimilarCarouselWrap>
     </SimilarSection>
   );
