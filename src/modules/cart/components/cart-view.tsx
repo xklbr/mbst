@@ -12,21 +12,13 @@ import { formatCurrency } from "@shared/lib/currency";
 import { useCart } from "../store";
 import { getCartItemKey } from "../types/cart.types";
 
-const PageInner = styled.div<{ $empty?: boolean }>`
+const PageInner = styled.div`
   display: flex;
   flex-direction: column;
-  ${({ $empty }) =>
-    $empty &&
-    `
-    min-height: calc(100vh - ${theme.layout.navbarHeightMobile} - (${theme.layout.containerPaddingMobile} * 2));
-  `}
+  min-height: calc(100vh - ${theme.layout.navbarHeightMobile} - (${theme.layout.containerPaddingMobile} * 2));
 
   ${media.desktopUp} {
-    ${({ $empty }) =>
-      $empty &&
-      `
-      min-height: calc(100vh - ${theme.layout.navbarHeightDesktop} - (2rem * 2));
-    `}
+    min-height: calc(100vh - ${theme.layout.navbarHeightDesktop} - (2rem * 2));
   }
 `;
 
@@ -172,12 +164,12 @@ const RemoveButton = styled.button`
   padding: 0;
 `;
 
-const Footer = styled.section<{ $empty?: boolean }>`
+const Footer = styled.section`
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
-  margin-top: ${({ $empty }) => ($empty ? "auto" : "1rem")};
+  margin-top: auto;
 
   ${media.desktopUp} {
     align-items: center;
@@ -328,7 +320,7 @@ export function CartView() {
     <>
       <AppNavbar />
       <PageContainer>
-        <PageInner $empty={items.length === 0}>
+        <PageInner>
           <ContentBlock>
             <Heading>{t.cart.title(items.length)}</Heading>
 
@@ -374,7 +366,7 @@ export function CartView() {
             )}
           </ContentBlock>
 
-          <Footer $empty={items.length === 0}>
+          <Footer>
             <ContinueWrapper $empty={items.length === 0}>
               <ContinueLink href="/">{t.cart.continueShopping}</ContinueLink>
             </ContinueWrapper>
