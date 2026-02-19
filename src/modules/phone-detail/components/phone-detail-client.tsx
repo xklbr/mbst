@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { media, theme } from "@shared/styles";
 import { Button } from "@shared/components/ui";
 import { useCart } from "@modules/cart/hooks";
+import { t } from "@shared/i18n";
 
 import { getOrderedSpecEntries } from "../lib/spec-display";
 import { usePhoneVariantState } from "../hooks/use-phone-variant-state";
@@ -234,7 +235,7 @@ export function PhoneDetailClient({ phone }: PhoneDetailClientProps) {
             {currentImageUrl ? (
               <Image alt={phone.name} src={currentImageUrl} />
             ) : (
-              <Placeholder>Image not available</Placeholder>
+              <Placeholder>{t.phoneDetail.imageNotAvailable}</Placeholder>
             )}
           </ImageFrame>
         </VisualStack>
@@ -243,8 +244,8 @@ export function PhoneDetailClient({ phone }: PhoneDetailClientProps) {
           <Heading>{phone.name}</Heading>
           <Price>
             {selectedStorage
-              ? `${currentPrice} EUR`
-              : `From ${phone.basePrice} EUR`}
+              ? t.phoneDetail.price(currentPrice)
+              : t.phoneDetail.priceFrom(phone.basePrice)}
           </Price>
 
           <VariantPicker
@@ -258,7 +259,7 @@ export function PhoneDetailClient({ phone }: PhoneDetailClientProps) {
 
           <CtaRow>
             <AddButton disabled={!canAddToCart} onClick={handleAddToCart}>
-              ADD
+              {t.phoneDetail.addToCart}
             </AddButton>
           </CtaRow>
         </ContentStack>
@@ -266,7 +267,7 @@ export function PhoneDetailClient({ phone }: PhoneDetailClientProps) {
 
       {phone.specs && Object.keys(phone.specs).length > 0 ? (
         <SpecsSection>
-          <SpecsTitle>Specifications</SpecsTitle>
+          <SpecsTitle>{t.phoneDetail.specifications}</SpecsTitle>
           <Specs>
             {getOrderedSpecEntries(phone.specs).map(({ key, label, value }) => (
               <SpecRow key={key}>

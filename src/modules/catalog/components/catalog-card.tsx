@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { media, theme } from "@shared/styles";
 import { formatCurrency } from "@shared/lib/currency";
+import { t } from "@shared/i18n";
 
 import type { CatalogPhone } from "../types/catalog.types";
 
@@ -136,7 +137,7 @@ export function CatalogCard({ phone }: { phone: CatalogPhone }) {
         {phone.imageUrl ? (
           <CardImage alt={phone.name} src={phone.imageUrl} />
         ) : (
-          <ImageFallback>No image</ImageFallback>
+          <ImageFallback>{t.common.noImage}</ImageFallback>
         )}
       </ImageFrame>
       <TextBlock>

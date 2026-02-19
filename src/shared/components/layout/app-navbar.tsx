@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { Icon, IconNameEnum, Logo } from "@shared/components/icons";
 import { useCart } from "@modules/cart/hooks/use-cart";
 import { containerLayout, media, theme } from "@shared/styles";
+import { t } from "@shared/i18n";
 
 const Root = styled.header`
   background: ${theme.colors.bg};
@@ -79,13 +80,13 @@ export function AppNavbar() {
   return (
     <Root>
       <NavbarContainer>
-        <Brand href="/" aria-label="MBST Home">
+        <Brand href="/" aria-label={t.nav.homeAriaLabel}>
           <BrandLogo />
         </Brand>
         {!isCartPage && (
           <CartLink
             href="/cart"
-            aria-label={`Open cart, ${itemCount} item${itemCount !== 1 ? "s" : ""}`}
+            aria-label={t.nav.cartAriaLabel(itemCount)}
           >
             <IconMobile>
               <Icon name={IconNameEnum.BAG_FILLED} alt="" size={18} />

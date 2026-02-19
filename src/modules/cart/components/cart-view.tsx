@@ -6,6 +6,7 @@ import styled, { css } from "styled-components";
 import { media, theme } from "@shared/styles";
 import { AppNavbar, PageContainer } from "@shared/components/layout";
 import { Button } from "@shared/components/ui";
+import { t } from "@shared/i18n";
 import { formatCurrency } from "@shared/lib/currency";
 
 import { useCart } from "../store";
@@ -329,7 +330,7 @@ export function CartView() {
       <PageContainer>
         <PageInner $empty={items.length === 0}>
           <ContentBlock>
-            <Heading>Cart ({items.length})</Heading>
+            <Heading>{t.cart.title(items.length)}</Heading>
 
             {items.length > 0 && (
               <List>
@@ -339,7 +340,7 @@ export function CartView() {
                       {item.imageUrl ? (
                         <ThumbImage alt={item.name} src={item.imageUrl} />
                       ) : (
-                        <ThumbFallback>No image</ThumbFallback>
+                        <ThumbFallback>{t.cart.noImage}</ThumbFallback>
                       )}
                     </ThumbFrame>
                     <RowBody>
@@ -363,7 +364,7 @@ export function CartView() {
                             })
                           }
                         >
-                          Delete
+                          {t.cart.delete}
                         </RemoveButton>
                       </ActionRow>
                     </RowBody>
@@ -375,17 +376,17 @@ export function CartView() {
 
           <Footer $empty={items.length === 0}>
             <ContinueWrapper $empty={items.length === 0}>
-              <ContinueLink href="/">CONTINUE SHOPPING</ContinueLink>
+              <ContinueLink href="/">{t.cart.continueShopping}</ContinueLink>
             </ContinueWrapper>
             {items.length > 0 && (
               <TotalRow>
-                <TotalLabel>TOTAL</TotalLabel>
+                <TotalLabel>{t.cart.total}</TotalLabel>
                 <TotalValue>{formatCurrency(totalPrice)}</TotalValue>
               </TotalRow>
             )}
             {items.length > 0 && (
               <PayWrapper>
-                <PayButton $variant="primary">PAY</PayButton>
+                <PayButton $variant="primary">{t.cart.pay}</PayButton>
               </PayWrapper>
             )}
           </Footer>

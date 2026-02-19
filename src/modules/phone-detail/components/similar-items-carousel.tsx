@@ -4,6 +4,7 @@ import Link from "next/link";
 import styled from "styled-components";
 
 import { media, theme } from "@shared/styles";
+import { t } from "@shared/i18n";
 import type { CatalogPhone } from "@modules/catalog";
 
 const SimilarSection = styled.section`
@@ -219,7 +220,7 @@ export function SimilarItemsCarousel({ phones }: SimilarItemsCarouselProps) {
 
   return (
     <SimilarSection>
-      <SimilarTitle>SIMILAR ITEMS</SimilarTitle>
+      <SimilarTitle>{t.phoneDetail.similarItems}</SimilarTitle>
       <SimilarCarouselWrap>
         <SimilarGrid>
           {phones.map((item) => (
@@ -235,7 +236,7 @@ export function SimilarItemsCarousel({ phones }: SimilarItemsCarouselProps) {
                         fontSize: "0.7rem",
                       }}
                     >
-                      No image
+                      {t.common.noImage}
                     </span>
                   )}
                 </SimilarImageFrame>
@@ -244,7 +245,9 @@ export function SimilarItemsCarousel({ phones }: SimilarItemsCarouselProps) {
                     <SimilarBrand>{item.brand}</SimilarBrand>
                     <SimilarName>{item.name}</SimilarName>
                   </SimilarTextBlock>
-                  <SimilarPrice>{item.basePrice} EUR</SimilarPrice>
+                  <SimilarPrice>
+                    {t.phoneDetail.price(item.basePrice)}
+                  </SimilarPrice>
                 </SimilarInfo>
               </SimilarLink>
             </SimilarCard>

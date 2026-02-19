@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { containerLayout, media, theme } from "@shared/styles";
 import { AppNavbar, PageContainer } from "@shared/components/layout";
+import { t } from "@shared/i18n";
 
 import { CatalogCard } from "./catalog-card";
 import { CatalogSearch } from "./catalog-search";
@@ -101,8 +102,7 @@ export async function CatalogView({ search = "" }: CatalogViewProps) {
     total = response.total;
   } catch (error) {
     console.error("Catalog load error:", error);
-    loadError =
-      "Unable to load catalog right now. Check API configuration and try again.";
+    loadError = t.catalog.loadError;
   }
 
   return (
@@ -114,7 +114,7 @@ export async function CatalogView({ search = "" }: CatalogViewProps) {
             <CatalogSearch initialValue={normalizedSearch} />
           </SearchBlock>
           <ResultBar>
-            <ResultCount>{total} results</ResultCount>
+            <ResultCount>{t.catalog.resultsCount(total)}</ResultCount>
           </ResultBar>
         </FixedBarInner>
       </FixedBar>

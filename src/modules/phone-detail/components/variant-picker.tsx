@@ -3,6 +3,7 @@
 import styled, { css } from "styled-components";
 
 import { theme } from "@shared/styles";
+import { t } from "@shared/i18n";
 import type {
   PhoneColorOption,
   PhoneStorageOption,
@@ -152,7 +153,7 @@ export function VariantPicker({
   return (
     <Root>
       <Group>
-        <Label>STORAGE ¿HOW MUCH SPACE DO YOU NEED?</Label>
+        <Label>{t.phoneDetail.storageLabel}</Label>
         <StorageRow>
           {storageOptions.map((storage) => {
             const active = storage.code === selectedStorageCode;
@@ -173,7 +174,7 @@ export function VariantPicker({
       </Group>
 
       <Group>
-        <Label>COLOR. PICK YOUR FAVOURITE.</Label>
+        <Label>{t.phoneDetail.colorLabel}</Label>
         <Row>
           {colorOptions.map((color) => {
             const active = color.code === selectedColorCode;
@@ -183,7 +184,7 @@ export function VariantPicker({
                 key={color.code}
                 $active={active}
                 $color={getSwatchColor(color)}
-                aria-label={`Select color ${color.name}`}
+                aria-label={t.phoneDetail.selectColor(color.name)}
                 aria-pressed={active}
                 onClick={() => onSelectColor(color.code)}
                 title={color.name}

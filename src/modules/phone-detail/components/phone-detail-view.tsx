@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { media } from "@shared/styles";
 import { Icon, IconNameEnum } from "@shared/components/icons";
 import { AppNavbar, PageContainer } from "@shared/components/layout";
+import { t } from "@shared/i18n";
 import type { CatalogPhone } from "@modules/catalog";
 
 import { PhoneDetailClient } from "./phone-detail-client";
@@ -72,7 +73,7 @@ export async function PhoneDetailView({ phoneId }: { phoneId: string }) {
               height={8.707107543945312}
               className="chevron-icon"
             />
-            Back
+            {t.common.back}
           </BackLink>
           <PhoneDetailClient phone={phone} />
         </PageContainer>

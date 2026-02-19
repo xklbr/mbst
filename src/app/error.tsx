@@ -1,5 +1,7 @@
 "use client";
 
+import { t } from "@shared/i18n";
+
 export default function Error({
   reset,
 }: {
@@ -8,8 +10,8 @@ export default function Error({
 }) {
   return (
     <div>
-      <h2>Something went wrong.</h2>
-      <button onClick={() => reset()}>Try again</button>
+      <h2>{t.errors.somethingWentWrong}</h2>
+      <button onClick={() => reset()}>{t.errors.tryAgain}</button>
     </div>
   );
 }

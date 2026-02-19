@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 import { Icon, IconNameEnum } from "@shared/components/icons";
+import { t } from "@shared/i18n";
 
 import { useCatalogSearch } from "../hooks/use-catalog-search";
 
@@ -116,14 +117,14 @@ export function CatalogSearch({ initialValue }: CatalogSearchProps) {
     <Wrapper>
       <SearchInput
         $hasClear={hasValue}
-        aria-label="Search phones by name or brand"
+        aria-label={t.catalog.searchAriaLabel}
         onChange={handleChange}
-        placeholder="Search for a smartphone..."
+        placeholder={t.catalog.searchPlaceholder}
         value={value}
       />
       {hasValue && (
         <ClearButton
-          aria-label="Clear search"
+          aria-label={t.catalog.clearSearchAriaLabel}
           type="button"
           onClick={handleClear}
         >
