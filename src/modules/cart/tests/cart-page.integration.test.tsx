@@ -26,6 +26,7 @@ vi.mock("../store", () => {
       ],
       removeItem: removeItemMock,
       totalPrice: 909,
+      isHydrated: true,
     }),
   };
 });
@@ -44,7 +45,7 @@ describe("CartView integration", () => {
   it("triggers remove callback with selected variant key", () => {
     render(<CartView />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Eliminar" }));
+    fireEvent.click(screen.getByRole("button", { name: "Delete" }));
 
     expect(removeItemMock).toHaveBeenCalledWith({
       id: "phone-1",

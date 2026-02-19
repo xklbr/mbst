@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import { media } from "@shared/styles/media";
 import { AppNavbar } from "@shared/components/layout/app-navbar";
 import { PageContainer } from "@shared/components/layout/page-container";
 
@@ -16,6 +17,10 @@ const FixedBar = styled.div`
   right: 0;
   top: 3.5rem;
   z-index: 5;
+
+  ${media.desktopUp} {
+    top: 85px;
+  }
 `;
 
 const FixedBarInner = styled.div`
@@ -23,13 +28,18 @@ const FixedBarInner = styled.div`
   max-width: 1200px;
   padding: 1.25rem;
 
-  @media (min-width: 768px) {
-    padding: 2rem;
+  ${media.desktopUp} {
+    max-width: none;
+    padding: 1.25rem 100px;
   }
 `;
 
 const CatalogContent = styled.div`
   padding-top: 9rem;
+
+  ${media.desktopUp} {
+    padding-top: 10rem;
+  }
 `;
 
 const SearchBlock = styled.section`
@@ -47,35 +57,22 @@ const ResultCount = styled.p`
   color: #4b5563;
   font-size: 0.875rem;
   margin: 0;
+  text-transform: uppercase;
 `;
 
 const Grid = styled.section`
   border-left: 0.5px solid #000000;
+  border-top: 0.5px solid #000000;
   display: grid;
   gap: 0;
   grid-template-columns: 1fr;
-  position: relative;
 
-  &::before {
-    border-top: 0.5px solid #000000;
-    content: "";
-    left: 0;
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    width: 100%;
+  ${media.tabletUp} {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(3, minmax(0, 344px));
-  }
-
-  @media (min-width: 1280px) {
-    grid-template-columns: repeat(4, minmax(0, 344px));
-  }
-
-  @media (min-width: 1536px) {
-    grid-template-columns: repeat(5, minmax(0, 344px));
+  ${media.desktopUp} {
+    grid-template-columns: repeat(5, 1fr);
   }
 `;
 
@@ -133,7 +130,7 @@ export async function CatalogView({ search = "" }: CatalogViewProps) {
           {loadError ? (
             <ErrorState role="alert">{loadError}</ErrorState>
           ) : phones.length === 0 ? (
-            <EmptyState>No phones found for your search.</EmptyState>
+            null
           ) : (
             <Grid>
               {phones.map((phone) => (

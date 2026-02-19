@@ -6,23 +6,36 @@ import styled from "styled-components";
 
 import { Icon, IconNameEnum, Logo } from "@shared/components/icons";
 import { useCart } from "@modules/cart/hooks/use-cart";
+import { media } from "@shared/styles/media";
 
 const Root = styled.header`
-  align-items: center;
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
   display: flex;
-  justify-content: space-between;
-  min-height: 3.5rem;
-  padding: 0.75rem 1.25rem;
-  position: fixed;
-  top: 0;
   left: 0;
+  padding: 0.75rem 0;
+  position: fixed;
   right: 0;
+  top: 0;
   z-index: 10;
 
-  @media (min-width: 1024px) {
-    padding-inline: 2rem;
+  ${media.desktopUp} {
+    padding: 28px 0;
+  }
+`;
+
+const NavbarContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 1.25rem;
+  width: 100%;
+
+  ${media.desktopUp} {
+    max-width: none;
+    padding: 0 100px;
   }
 `;
 
@@ -51,7 +64,7 @@ const CartCount = styled.span`
 const IconMobile = styled.span`
   display: inline-flex;
 
-  @media (min-width: 768px) {
+  ${media.tabletUp} {
     display: none;
   }
 `;
@@ -59,7 +72,7 @@ const IconMobile = styled.span`
 const IconDesktop = styled.span`
   display: none;
 
-  @media (min-width: 768px) {
+  ${media.tabletUp} {
     display: inline-flex;
   }
 `;
@@ -71,20 +84,22 @@ export function AppNavbar() {
 
   return (
     <Root>
-      <Brand href="/" aria-label="MBST Home">
-        <BrandLogo />
-      </Brand>
-      {!isCartPage && (
-        <CartLink href="/cart" aria-label="Open cart">
-          <IconMobile>
-            <Icon name={IconNameEnum.BAG_FILLED} alt="" size={18} />
-          </IconMobile>
-          <IconDesktop>
-            <Icon name={IconNameEnum.BAG} alt="" size={18} />
-          </IconDesktop>
-          <CartCount>{itemCount}</CartCount>
-        </CartLink>
-      )}
+      <NavbarContainer>
+        <Brand href="/" aria-label="MBST Home">
+          <BrandLogo />
+        </Brand>
+        {!isCartPage && (
+          <CartLink href="/cart" aria-label="Open cart">
+            <IconMobile>
+              <Icon name={IconNameEnum.BAG_FILLED} alt="" size={18} />
+            </IconMobile>
+            <IconDesktop>
+              <Icon name={IconNameEnum.BAG} alt="" size={18} />
+            </IconDesktop>
+            <CartCount>{itemCount}</CartCount>
+          </CartLink>
+        )}
+      </NavbarContainer>
     </Root>
   );
 }

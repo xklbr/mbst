@@ -56,23 +56,30 @@ const ColorName = styled.div`
 const OptionButton = styled.button<{ $active: boolean }>`
   align-items: center;
   background: #ffffff;
-  border: ${({ $active }) =>
-    $active ? "2px solid #000000" : "1px solid #CCCCCC"};
+  border: 1px solid ${({ $active }) => ($active ? "#000000" : "#CCCCCC")};
   color: #000000;
   cursor: pointer;
   display: flex;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
   font-weight: 300;
-  height: 65px;
+  height: 48px;
   justify-content: center;
   letter-spacing: 0;
   line-height: 100%;
   margin-left: -1px;
   padding: 0;
-  text-transform: capitalize;
-  transition: border-color 0.2s ease;
-  width: 95px;
+  position: relative;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  width: 89px;
+  z-index: ${({ $active }) => ($active ? 1 : 0)};
+
+  ${({ $active }) =>
+    $active &&
+    `
+    box-shadow: inset 0 0 0 1px #000000;
+  `}
 
   &:first-child {
     margin-left: 0;
@@ -80,6 +87,7 @@ const OptionButton = styled.button<{ $active: boolean }>`
 
   &:hover {
     background: #f9fafb;
+    ${({ $active }) => !$active && "border-color: #9ca3af; z-index: 1;"}
   }
 `;
 

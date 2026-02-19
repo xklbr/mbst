@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import styled from "styled-components";
 
+import { media } from "@shared/styles/media";
 import { Icon, IconNameEnum } from "@shared/components/icons";
 import { AppNavbar } from "@shared/components/layout/app-navbar";
 import { PageContainer } from "@shared/components/layout/page-container";
@@ -18,23 +19,26 @@ import type { PhoneDetail } from "../types/phone-detail.types";
 
 const BackLink = styled(Link)`
   align-items: center;
-  color: #111111;
+  color: #000000;
   display: inline-flex;
-  font-size: 0.875rem;
-  gap: 0.25rem;
+  font-size: 12px;
+  font-weight: 300;
+  gap: 8px;
   margin-bottom: 1rem;
+  padding-left: 5px;
   text-decoration: none;
+  text-transform: uppercase;
 
   &:hover {
     text-decoration: underline;
   }
 
-  @media (min-width: 768px) and (max-width: 1023px) {
-    margin-left: -0.75rem;
+  ${media.largeDesktopUp} {
+    line-height: 100%;
   }
 
-  @media (min-width: 1200px) {
-    margin-left: calc(-1 * (100vw - 1200px) / 2);
+  .chevron-icon {
+    flex-shrink: 0;
   }
 `;
 
@@ -63,8 +67,14 @@ export async function PhoneDetailView({ phoneId }: { phoneId: string }) {
       <PageBottom>
         <PageContainer>
           <BackLink href="/">
-            <Icon name={IconNameEnum.CHEVRON_LEFT} alt="" size={16} />
-            BACK
+            <Icon
+              name={IconNameEnum.CHEVRON_LEFT}
+              alt=""
+              width={5.060659885406494}
+              height={8.707107543945312}
+              className="chevron-icon"
+            />
+            Back
           </BackLink>
           <PhoneDetailClient phone={phone} />
         </PageContainer>

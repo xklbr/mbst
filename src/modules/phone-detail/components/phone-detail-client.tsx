@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import styled from "styled-components";
 
+import { media } from "@shared/styles/media";
 import { Button } from "@shared/components/ui/button";
 import { useCart } from "@modules/cart/hooks/use-cart";
 
@@ -16,10 +17,14 @@ const Wrapper = styled.section`
   gap: 2rem;
   align-items: start;
 
-  @media (min-width: 1200px) {
-    align-items: center;
-    gap: 3rem;
+  ${media.tabletUp} {
     grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  ${media.largeDesktopUp} {
+    align-items: flex-start;
+    gap: 3rem;
   }
 `;
 
@@ -63,26 +68,27 @@ const Price = styled.p`
 `;
 
 const ImageFrame = styled.div`
-  align-items: flex-start;
+  align-items: center;
   background: #ffffff;
   display: flex;
   justify-content: center;
-  min-height: 630px;
   overflow: hidden;
   padding: 0;
+  width: 100%;
 
-  @media (min-width: 1200px) {
-    min-height: 630px;
-    padding: 0;
+  ${media.mobileOnly} {
+    min-height: auto;
   }
 `;
 
 const Image = styled.img`
-  height: 630px;
+  height: auto;
+  max-height: 630px;
+  max-width: 100%;
   object-fit: contain;
   opacity: 1;
   transform: rotate(0deg);
-  width: 510px;
+  width: 100%;
 `;
 
 const Placeholder = styled.p`
@@ -94,14 +100,25 @@ const CtaRow = styled.section`
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+`;
+
+const AddButton = styled(Button)`
+  height: 48px;
+  padding: 5px 7px;
+  width: 240px;
+  max-width: 100%;
+
+  ${media.mobileOnly} {
+    width: 100%;
+  }
 `;
 
 const SpecsSection = styled.section`
   margin-top: 80px;
   padding-top: 0;
 
-  @media (min-width: 1200px) {
+  ${media.largeDesktopUp} {
     margin-top: 2rem;
   }
 `;
@@ -124,10 +141,14 @@ const Specs = styled.dl`
 const SpecRow = styled.div`
   border-bottom: 1px solid #e5e7eb;
   display: grid;
-  grid-template-columns: minmax(140px, 200px) 1fr;
+  grid-template-columns: 40% 1fr;
   gap: 1rem;
   padding: 1rem 0;
   align-items: start;
+
+  ${media.largeDesktopUp} {
+    grid-template-columns: minmax(140px, 200px) 1fr;
+  }
 
   &:first-of-type {
     border-top: 1px solid #e5e7eb;
@@ -235,9 +256,9 @@ export function PhoneDetailClient({ phone }: PhoneDetailClientProps) {
           />
 
           <CtaRow>
-            <Button disabled={!canAddToCart} onClick={handleAddToCart}>
-              ADD
-            </Button>
+            <AddButton disabled={!canAddToCart} onClick={handleAddToCart}>
+              AÑADIR
+            </AddButton>
           </CtaRow>
         </ContentStack>
       </Wrapper>

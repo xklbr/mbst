@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 
+import { media } from "@shared/styles/media";
 import { formatCurrency } from "@shared/lib/currency";
 
 import type { CatalogPhone } from "../types/catalog.types";
@@ -10,19 +11,19 @@ const BORDER = "0.5px solid #000000";
 const Card = styled(Link)`
   border-bottom: ${BORDER};
   border-right: ${BORDER};
+  aspect-ratio: 1 / 1.2;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 344px;
-  max-width: 100%;
+  height: auto;
   opacity: 1;
   overflow: hidden;
   padding: 0;
   position: relative;
   text-decoration: none;
-  width: 344px;
+  width: 100%;
 
-  @media (hover: hover) and (min-width: 768px) {
+  ${media.hoverDesktop} {
     &::before {
       background: #000000;
       bottom: 0;
@@ -52,43 +53,7 @@ const Card = styled(Link)`
     }
   }
 
-  &:first-child {
-    border-left: ${BORDER};
-    border-top: ${BORDER};
-  }
-
-  @media (min-width: 768px) {
-    &:nth-child(2n + 1) {
-      border-left: ${BORDER};
-    }
-    &:nth-child(-n + 2) {
-      border-top: ${BORDER};
-    }
-  }
-
-  @media (min-width: 1032px) {
-    border-left: none;
-    border-top: none;
-    &:nth-child(3n + 1) {
-      border-left: ${BORDER};
-    }
-    &:nth-child(-n + 3) {
-      border-top: ${BORDER};
-    }
-  }
-
-  @media (min-width: 1376px) {
-    border-left: none;
-    border-top: none;
-    &:nth-child(4n + 1) {
-      border-left: ${BORDER};
-    }
-    &:nth-child(-n + 4) {
-      border-top: ${BORDER};
-    }
-  }
-
-  @media (max-width: 767px) {
+  ${media.mobileOnly} {
     width: 100%;
   }
 `;
@@ -97,27 +62,26 @@ const ImageFrame = styled.div`
   align-items: center;
   background: transparent;
   display: flex;
-  height: 257px;
+  flex: 1;
   justify-content: center;
   margin: 0 16px;
-  max-width: 312px;
   overflow: hidden;
   padding-top: 16px;
   position: relative;
-  width: 100%;
+  width: auto;
   z-index: 1;
 `;
 
 const TextBlock = styled.div`
   margin-top: auto;
-  padding: 0 16px 16px 16px;
+  padding: 16px;
   position: relative;
   z-index: 1;
 `;
 
 const CardImage = styled.img`
-  height: 257px;
-  max-width: 312px;
+  height: 100%;
+  max-height: 257px;
   object-fit: contain;
   opacity: 1;
   width: 100%;

@@ -3,38 +3,47 @@
 import Link from "next/link";
 import styled from "styled-components";
 
+import { media } from "@shared/styles/media";
 import type { CatalogPhone } from "@modules/catalog";
 
 const SimilarSection = styled.section`
   margin-top: 2rem;
+  padding-bottom: 4rem;
   padding-top: 2rem;
 `;
 
 const SimilarTitle = styled.h2`
-  margin: 0 auto 1rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 100%;
+  margin: 0 auto 1.5rem;
   max-width: 1200px;
   padding: 0 1.25rem;
+  text-transform: uppercase;
 
-  @media (max-width: 767px) {
+
+  ${media.mobileOnly} {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 20px;
     font-weight: 300;
     letter-spacing: 0;
     line-height: 100%;
     margin-bottom: 40px;
-    text-transform: uppercase;
   }
 
-  @media (min-width: 768px) {
-    padding: 0 2rem;
+  ${media.desktopUp} {
+    margin: 0 0 1rem;
+    max-width: none;
+    padding: 0 100px;
   }
 `;
 
 const SimilarCarouselWrap = styled.div`
   padding-left: 1.25rem;
 
-  @media (min-width: 768px) {
-    padding-left: calc((100vw - 1200px) / 2 + 2rem);
+  ${media.desktopUp} {
+    padding-left: 100px;
   }
 `;
 
@@ -50,17 +59,24 @@ const SimilarGrid = styled.ul`
   touch-action: pan-x;
   -webkit-overflow-scrolling: touch;
 
-  @media (min-width: 768px) {
+  ${media.tabletUp} {
     padding-right: 2rem;
   }
 
   &::-webkit-scrollbar {
-    height: 3px;
+    display: block;
+    height: 1px;
   }
 
   &::-webkit-scrollbar-track {
     background: #cccccc;
-    margin-top: 1rem;
+    margin-right: 1.25rem;
+  }
+
+  ${media.tabletUp} {
+    &::-webkit-scrollbar-track {
+      margin-right: 2rem;
+    }
   }
 
   &::-webkit-scrollbar-thumb {
@@ -69,41 +85,89 @@ const SimilarGrid = styled.ul`
   }
 `;
 
+const CARD_SIZE_MOBILE = 343;
+const CARD_SIZE_DESKTOP = 344;
+
+const BORDER = "0.5px solid #000000";
+
 const SimilarCard = styled.li`
-  border: 0.5px solid #000000;
+  border-bottom: ${BORDER};
+  border-right: ${BORDER};
+  border-top: ${BORDER};
   box-sizing: border-box;
-  flex: 0 0 344px;
-  height: 344px;
-  margin-left: -0.5px;
+  flex: 0 0 ${CARD_SIZE_MOBILE}px;
+  height: ${CARD_SIZE_MOBILE}px;
+  list-style: none;
+  margin: 0;
   opacity: 1;
   scroll-snap-align: start;
-  width: 344px;
+  width: ${CARD_SIZE_MOBILE}px;
 
-  &:first-of-type {
-    margin-left: 0;
+  &:first-child {
+    border-left: ${BORDER};
+  }
+
+  ${media.tabletUp} {
+    flex: 0 0 ${CARD_SIZE_DESKTOP}px;
+    height: ${CARD_SIZE_DESKTOP}px;
+    width: ${CARD_SIZE_DESKTOP}px;
   }
 `;
 
 const SimilarLink = styled(Link)`
   box-sizing: border-box;
-  display: grid;
-  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  padding: 16px;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
   text-decoration: none;
+  width: 100%;
+
+  ${media.hoverDesktop} {
+    &::before {
+      background: #000000;
+      bottom: 0;
+      content: "";
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.65s ease-in-out;
+      z-index: 0;
+    }
+
+    &:hover::before {
+      transform: scaleY(1);
+    }
+
+    &:hover span,
+    &:hover strong {
+      color: #ffffff;
+    }
+
+    &:not(:hover) span,
+    &:not(:hover) strong {
+      transition-delay: 0.4s;
+    }
+  }
 `;
 
 const SimilarImageFrame = styled.div`
   align-items: center;
   background: transparent;
   display: flex;
-  height: 257px;
+  flex: 1;
   justify-content: center;
-  margin: 0 auto;
-  max-width: 312px;
+  min-height: 0;
   overflow: hidden;
-  padding: 10px;
+  padding: 16px 16px 0;
+  position: relative;
   width: 100%;
+  z-index: 1;
 `;
 
 const SimilarImage = styled.img`
@@ -117,8 +181,12 @@ const SimilarImage = styled.img`
 const SimilarInfo = styled.div`
   align-items: flex-end;
   display: flex;
+  flex-shrink: 0;
   gap: 0.5rem;
   justify-content: space-between;
+  padding: 16px;
+  position: relative;
+  z-index: 1;
 `;
 
 const SimilarTextBlock = styled.div`
@@ -161,7 +229,7 @@ export function SimilarItemsCarousel({ phones }: SimilarItemsCarouselProps) {
 
   return (
     <SimilarSection>
-      <SimilarTitle>Similar Items</SimilarTitle>
+      <SimilarTitle>SIMILAR ITEMS</SimilarTitle>
       <SimilarCarouselWrap>
         <SimilarGrid>
           {phones.map((item) => (

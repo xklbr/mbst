@@ -19,6 +19,7 @@ export const theme = {
     mobile: "393px",
     tablet: "768px",
     desktop: "1024px",
+    largeDesktop: "1200px",
   },
   frames: {
     mobile: { width: 393, height: 852 },

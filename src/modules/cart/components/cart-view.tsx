@@ -162,16 +162,38 @@ const RemoveButton = styled.button`
 `;
 
 const Footer = styled.section`
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
   margin-top: 1rem;
+
+  @media (min-width: 1024px) {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    grid-template-columns: unset;
+    grid-template-rows: unset;
+    justify-content: space-between;
+  }
 `;
 
 const TotalRow = styled.div`
   display: flex;
+  gap: 1.25rem;
+  grid-column: 1 / -1;
   justify-content: space-between;
+  order: 1;
   width: 100%;
+
+  @media (min-width: 1024px) {
+    grid-column: unset;
+    justify-content: flex-start;
+    margin-left: auto;
+    margin-right: 50px;
+    order: unset;
+    width: auto;
+  }
 `;
 
 const TotalLabel = styled.span`
@@ -194,14 +216,31 @@ const TotalValue = styled.span`
   text-transform: uppercase;
 `;
 
-const ButtonsRow = styled.div`
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
+const ContinueWrapper = styled.span`
+  order: 2;
 
   @media (max-width: 767px) {
-    flex-wrap: nowrap;
+    min-width: 0;
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    flex-shrink: 0;
+    order: unset;
+  }
+`;
+
+const PayWrapper = styled.span`
+  order: 3;
+
+  @media (max-width: 767px) {
+    min-width: 0;
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    flex-shrink: 0;
+    order: unset;
   }
 `;
 
@@ -225,13 +264,16 @@ const ContinueLink = styled(Link)`
   text-transform: uppercase;
   width: 361px;
 
+  @media (min-width: 1024px) {
+    width: 260px;
+  }
+
   @media (max-width: 767px) {
     border-width: 0.5px;
-    flex: 1;
     font-style: normal;
     letter-spacing: 0.08em;
     min-width: 0;
-    width: auto;
+    width: 100%;
   }
 `;
 
@@ -240,8 +282,11 @@ const PayButton = styled(Button)`
   padding: 5px 7px;
   width: 175px;
 
+  @media (min-width: 1024px) {
+    width: 260px;
+  }
+
   @media (max-width: 767px) {
-    flex: 1;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 12px;
     font-style: normal;
@@ -251,7 +296,7 @@ const PayButton = styled(Button)`
     min-width: 0;
     text-align: center;
     text-transform: uppercase;
-    width: auto;
+    width: 100%;
   }
 `;
 
@@ -309,18 +354,20 @@ export function CartView() {
           </ContentBlock>
 
           <Footer>
+            <ContinueWrapper>
+              <ContinueLink href="/">CONTINUE SHOPPING</ContinueLink>
+            </ContinueWrapper>
             {items.length > 0 && (
               <TotalRow>
                 <TotalLabel>TOTAL</TotalLabel>
                 <TotalValue>{formatCurrency(totalPrice)}</TotalValue>
               </TotalRow>
             )}
-            <ButtonsRow>
-              <ContinueLink href="/">CONTINUE SHOPPING</ContinueLink>
-              {items.length > 0 && (
-                <PayButton variant="primary">PAY</PayButton>
-              )}
-            </ButtonsRow>
+            {items.length > 0 && (
+              <PayWrapper>
+                <PayButton $variant="primary">PAY</PayButton>
+              </PayWrapper>
+            )}
           </Footer>
         </PageInner>
       </PageContainer>
