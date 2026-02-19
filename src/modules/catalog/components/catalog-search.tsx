@@ -32,6 +32,11 @@ const SearchInput = styled.input<{ $hasClear?: boolean }>`
   &:focus {
     border-bottom-color: #000000;
   }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
 `;
 
 const ClearButton = styled.button`
