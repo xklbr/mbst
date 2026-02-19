@@ -1,20 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import { AppNavbar } from "@shared/components/layout/app-navbar";
-import { PageContainer } from "@shared/components/layout/page-container";
-import { Button } from "@shared/components/ui/button";
+import { media, theme } from "@shared/styles";
+import { AppNavbar, PageContainer } from "@shared/components/layout";
+import { Button } from "@shared/components/ui";
 import { formatCurrency } from "@shared/lib/currency";
 
 import { useCart } from "../store";
 import { getCartItemKey } from "../types/cart.types";
 
-const PageInner = styled.div`
+const PageInner = styled.div<{ $empty?: boolean }>`
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 3.5rem);
+  ${({ $empty }) =>
+    $empty &&
+    `
+    min-height: calc(100vh - ${theme.layout.navbarHeightMobile} - (${theme.layout.containerPaddingMobile} * 2));
+  `}
+
+  ${media.desktopUp} {
+    ${({ $empty }) =>
+      $empty &&
+      `
+      min-height: calc(100vh - ${theme.layout.navbarHeightDesktop} - (2rem * 2));
+    `}
+  }
 `;
 
 const ContentBlock = styled.div`
@@ -22,9 +34,7 @@ const ContentBlock = styled.div`
 `;
 
 const Heading = styled.h1`
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 20px;
-  font-weight: 300;
+  font-size: ${theme.fontSize.lg};
   letter-spacing: 0;
   line-height: 100%;
   margin: 0 0 1rem;
@@ -40,47 +50,47 @@ const List = styled.ul`
 `;
 
 const Row = styled.li`
-  align-items: center;
+  align-items: start;
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: 262px 1fr;
+  grid-template-columns: 16.375rem 1fr;
   padding: 0.75rem 0;
 
-  @media (max-width: 767px) {
-    gap: 10px;
-    grid-template-columns: 160px 1fr;
+  ${media.mobileOnly} {
+    gap: 0.625rem;
+    grid-template-columns: 10rem 1fr;
   }
 `;
 
 const ThumbFrame = styled.div`
   align-items: center;
   display: flex;
-  height: 324px;
+  height: 20.25rem;
   justify-content: center;
   overflow: hidden;
-  width: 262px;
+  width: 16.375rem;
 
-  @media (max-width: 767px) {
-    height: 198px;
-    width: 160px;
+  ${media.mobileOnly} {
+    height: 12.375rem;
+    width: 10rem;
   }
 `;
 
 const ThumbImage = styled.img`
-  height: 324px;
+  height: 20.25rem;
   object-fit: contain;
   opacity: 1;
   transform: rotate(0deg);
-  width: 262px;
+  width: 16.375rem;
 
-  @media (max-width: 767px) {
-    height: 198px;
-    width: 160px;
+  ${media.mobileOnly} {
+    height: 12.375rem;
+    width: 10rem;
   }
 `;
 
 const ThumbFallback = styled.span`
-  color: #6b7280;
+  color: ${theme.colors.mutedText};
   font-size: 0.7rem;
 `;
 
@@ -89,22 +99,22 @@ const RowBody = styled.section`
   align-items: flex-start;
   display: grid;
   gap: 0;
+  margin-top: 5.625rem;
 
-  @media (max-width: 767px) {
+  ${media.mobileOnly} {
     display: flex;
     flex-direction: column;
-    height: 198px;
+    height: 12.375rem;
     justify-content: space-between;
-    padding: 40px 0;
-    width: 177px;
+    margin-top: 0;
+    padding: 2.5rem 0;
+    width: 11.0625rem;
   }
 `;
 
-const itemTextStyles = `
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12px;
+const itemTextStyles = css`
+  font-size: ${theme.fontSize.sm};
   font-style: normal;
-  font-weight: 300;
   letter-spacing: 0;
   line-height: 100%;
 `;
@@ -123,8 +133,8 @@ const Subtitle = styled.span`
   margin-top: 0.5rem;
   text-transform: uppercase;
 
-  @media (max-width: 767px) {
-    margin-top: 5px;
+  ${media.mobileOnly} {
+    margin-top: 0.3125rem;
   }
 `;
 
@@ -134,8 +144,8 @@ const PriceLine = styled.span`
   margin: 0;
   margin-top: 1.25rem;
 
-  @media (max-width: 767px) {
-    margin-top: 20px;
+  ${media.mobileOnly} {
+    margin-top: 1.25rem;
     text-align: right;
     text-transform: capitalize;
   }
@@ -145,10 +155,10 @@ const ActionRow = styled.section`
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 1.25rem;
+  margin-top: 5rem;
 
-  @media (max-width: 767px) {
-    margin-top: 30px;
+  ${media.mobileOnly} {
+    margin-top: 1.875rem;
   }
 `;
 
@@ -156,19 +166,19 @@ const RemoveButton = styled.button`
   ${itemTextStyles}
   background: none;
   border: none;
-  color: #df0000;
+  color: ${theme.colors.danger};
   cursor: pointer;
   padding: 0;
 `;
 
-const Footer = styled.section`
+const Footer = styled.section<{ $empty?: boolean }>`
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
-  margin-top: 1rem;
+  margin-top: ${({ $empty }) => ($empty ? "auto" : "1rem")};
 
-  @media (min-width: 1024px) {
+  ${media.desktopUp} {
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -186,19 +196,18 @@ const TotalRow = styled.div`
   order: 1;
   width: 100%;
 
-  @media (min-width: 1024px) {
+  ${media.desktopUp} {
     grid-column: unset;
     justify-content: flex-start;
     margin-left: auto;
-    margin-right: 50px;
+    margin-right: 3.125rem;
     order: unset;
     width: auto;
   }
 `;
 
 const TotalLabel = styled.span`
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: ${theme.fontSize.md};
   font-weight: 400;
   letter-spacing: 0;
   line-height: 100%;
@@ -207,8 +216,7 @@ const TotalLabel = styled.span`
 `;
 
 const TotalValue = styled.span`
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: ${theme.fontSize.md};
   font-weight: 400;
   letter-spacing: 0;
   line-height: 100%;
@@ -216,15 +224,20 @@ const TotalValue = styled.span`
   text-transform: uppercase;
 `;
 
-const ContinueWrapper = styled.span`
+const ContinueWrapper = styled.span<{ $empty?: boolean }>`
   order: 2;
 
-  @media (max-width: 767px) {
+  ${media.mobileOnly} {
     min-width: 0;
     width: 100%;
+    ${({ $empty }) =>
+      $empty &&
+      `
+      grid-column: 1 / -1;
+    `}
   }
 
-  @media (min-width: 1024px) {
+  ${media.desktopUp} {
     flex-shrink: 0;
     order: unset;
   }
@@ -233,12 +246,19 @@ const ContinueWrapper = styled.span`
 const PayWrapper = styled.span`
   order: 3;
 
-  @media (max-width: 767px) {
+  ${media.mobileOnly} {
+    display: block;
     min-width: 0;
     width: 100%;
   }
 
-  @media (min-width: 1024px) {
+  ${media.tabletOnly} {
+    display: block;
+    min-width: 0;
+    width: 100%;
+  }
+
+  ${media.desktopUp} {
     flex-shrink: 0;
     order: unset;
   }
@@ -246,56 +266,56 @@ const PayWrapper = styled.span`
 
 const ContinueLink = styled(Link)`
   align-items: center;
-  border: 1px solid #111111;
+  border: 1px solid ${theme.colors.primary};
   box-sizing: border-box;
-  color: #111111;
+  color: ${theme.colors.primary};
   display: inline-flex;
   flex-shrink: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 300;
-  height: 48px;
+  font-size: ${theme.fontSize.sm};
+  height: 3rem;
   justify-content: center;
   letter-spacing: 0.08em;
-  line-height: 16px;
-  padding: 5px 7px;
+  line-height: 1rem;
+  padding: 0.3125rem 0.4375rem;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  width: 361px;
+  width: 22.5625rem;
 
-  @media (min-width: 1024px) {
-    width: 260px;
+  ${media.desktopUp} {
+    width: 16.25rem;
   }
 
-  @media (max-width: 767px) {
+  ${media.mobileOnly} {
     border-width: 0.5px;
-    font-style: normal;
-    letter-spacing: 0.08em;
     min-width: 0;
     width: 100%;
   }
 `;
 
 const PayButton = styled(Button)`
-  height: 48px;
-  padding: 5px 7px;
-  width: 175px;
+  height: 3rem;
+  padding: 0.3125rem 0.4375rem;
+  width: 10.9375rem;
 
-  @media (min-width: 1024px) {
-    width: 260px;
+  ${media.desktopUp} {
+    width: 16.25rem;
   }
 
-  @media (max-width: 767px) {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 300;
+  ${media.mobileOnly} {
+    font-size: ${theme.fontSize.sm};
     letter-spacing: 0.08em;
-    line-height: 16px;
+    line-height: 1rem;
+    max-width: none;
     min-width: 0;
     text-align: center;
     text-transform: uppercase;
+    width: 100%;
+  }
+
+  ${media.tabletOnly} {
+    max-width: none;
+    min-width: 0;
     width: 100%;
   }
 `;
@@ -307,7 +327,7 @@ export function CartView() {
     <>
       <AppNavbar />
       <PageContainer>
-        <PageInner>
+        <PageInner $empty={items.length === 0}>
           <ContentBlock>
             <Heading>Cart ({items.length})</Heading>
 
@@ -343,7 +363,7 @@ export function CartView() {
                             })
                           }
                         >
-                          Eliminar
+                          Delete
                         </RemoveButton>
                       </ActionRow>
                     </RowBody>
@@ -353,8 +373,8 @@ export function CartView() {
             )}
           </ContentBlock>
 
-          <Footer>
-            <ContinueWrapper>
+          <Footer $empty={items.length === 0}>
+            <ContinueWrapper $empty={items.length === 0}>
               <ContinueLink href="/">CONTINUE SHOPPING</ContinueLink>
             </ContinueWrapper>
             {items.length > 0 && (

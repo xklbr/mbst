@@ -2,10 +2,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import styled from "styled-components";
 
-import { media } from "@shared/styles/media";
+import { media } from "@shared/styles";
 import { Icon, IconNameEnum } from "@shared/components/icons";
-import { AppNavbar } from "@shared/components/layout/app-navbar";
-import { PageContainer } from "@shared/components/layout/page-container";
+import { AppNavbar, PageContainer } from "@shared/components/layout";
 import type { CatalogPhone } from "@modules/catalog";
 
 import { PhoneDetailClient } from "./phone-detail-client";
@@ -22,7 +21,6 @@ const BackLink = styled(Link)`
   color: #000000;
   display: inline-flex;
   font-size: 12px;
-  font-weight: 300;
   gap: 8px;
   margin-bottom: 1rem;
   padding-left: 5px;

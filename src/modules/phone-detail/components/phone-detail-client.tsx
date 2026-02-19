@@ -3,9 +3,9 @@
 import { useMemo } from "react";
 import styled from "styled-components";
 
-import { media } from "@shared/styles/media";
-import { Button } from "@shared/components/ui/button";
-import { useCart } from "@modules/cart/hooks/use-cart";
+import { media, theme } from "@shared/styles";
+import { Button } from "@shared/components/ui";
+import { useCart } from "@modules/cart/hooks";
 
 import { getOrderedSpecEntries } from "../lib/spec-display";
 import { usePhoneVariantState } from "../hooks/use-phone-variant-state";
@@ -43,13 +43,15 @@ const ContentStack = styled.section`
   align-items: flex-start;
   margin: 0;
   padding: 0;
+
+  ${media.desktopUp} {
+    margin-top: 6.25rem;
+  }
 `;
 
 const Heading = styled.h1`
-  color: #000000;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 20px;
-  font-weight: 300;
+  color: ${theme.colors.primary};
+  font-size: ${theme.fontSize.lg};
   letter-spacing: 0;
   line-height: 100%;
   margin: 0 0 0.75rem;
@@ -57,13 +59,11 @@ const Heading = styled.h1`
 `;
 
 const Price = styled.p`
-  color: #000000;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 300;
+  color: ${theme.colors.primary};
+  font-size: ${theme.fontSize.md};
   letter-spacing: 0;
   line-height: 100%;
-  margin: 0 0 30px;
+  margin: 0 0 1.875rem;
   text-transform: capitalize;
 `;
 
@@ -83,7 +83,7 @@ const ImageFrame = styled.div`
 
 const Image = styled.img`
   height: auto;
-  max-height: 630px;
+  max-height: 39.375rem;
   max-width: 100%;
   object-fit: contain;
   opacity: 1;
@@ -104,10 +104,11 @@ const CtaRow = styled.section`
 `;
 
 const AddButton = styled(Button)`
-  height: 48px;
-  padding: 5px 7px;
-  width: 240px;
+  height: 3rem;
+  padding: 0.3125rem 0.4375rem;
+  width: 15rem;
   max-width: 100%;
+  text-transform: uppercase;
 
   ${media.mobileOnly} {
     width: 100%;
@@ -115,7 +116,7 @@ const AddButton = styled(Button)`
 `;
 
 const SpecsSection = styled.section`
-  margin-top: 80px;
+  margin-top: 5rem;
   padding-top: 0;
 
   ${media.largeDesktopUp} {
@@ -130,7 +131,7 @@ const SpecsTitle = styled.h2`
   letter-spacing: 0;
   text-transform: uppercase;
   margin: 0 0 0;
-  margin-bottom: 40px;
+  margin-bottom: 2.5rem;
 `;
 
 const Specs = styled.dl`
@@ -147,7 +148,7 @@ const SpecRow = styled.div`
   align-items: start;
 
   ${media.largeDesktopUp} {
-    grid-template-columns: minmax(140px, 200px) 1fr;
+    grid-template-columns: minmax(8.75rem, 12.5rem) 1fr;
   }
 
   &:first-of-type {
@@ -156,8 +157,8 @@ const SpecRow = styled.div`
 `;
 
 const SpecKey = styled.dt`
-  color: #000000;
-  font-size: 12px;
+  color: ${theme.colors.primary};
+  font-size: ${theme.fontSize.sm};
   font-style: normal;
   line-height: 100%;
   letter-spacing: 0;
@@ -166,8 +167,8 @@ const SpecKey = styled.dt`
 `;
 
 const SpecValue = styled.dd`
-  color: #000000;
-  font-size: 12px;
+  color: ${theme.colors.primary};
+  font-size: ${theme.fontSize.sm};
   font-style: normal;
   line-height: 100%;
   letter-spacing: 0;
@@ -257,7 +258,7 @@ export function PhoneDetailClient({ phone }: PhoneDetailClientProps) {
 
           <CtaRow>
             <AddButton disabled={!canAddToCart} onClick={handleAddToCart}>
-              AÑADIR
+              ADD
             </AddButton>
           </CtaRow>
         </ContentStack>

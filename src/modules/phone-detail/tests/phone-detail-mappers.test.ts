@@ -13,7 +13,11 @@ describe("mapPhoneDetailResponse", () => {
       image: "https://cdn.example.com/main.png",
       options: {
         colors: [
-          { hexCode: "#111111", name: "Black", imageUrl: "https://cdn.example.com/black.png" },
+          {
+            hexCode: "#000000",
+            name: "Black",
+            imageUrl: "https://cdn.example.com/black.png",
+          },
         ],
         storages: [{ capacity: "512 GB", price: 1199 }],
       },
@@ -41,7 +45,7 @@ describe("mapPhoneDetailResponse", () => {
     });
     expect(mapped.colorOptions).toHaveLength(1);
     expect(mapped.storageOptions).toHaveLength(1);
-    expect(mapped.colorOptions[0]?.code).toBe("#111111");
+    expect(mapped.colorOptions[0]?.code).toBe("#000000");
     expect(mapped.storageOptions[0]?.name).toBe("512 GB");
     expect(mapped.similarProducts).toHaveLength(1);
     expect(mapped.specs.screen).toBe("6.8 OLED");

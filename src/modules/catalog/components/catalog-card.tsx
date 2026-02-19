@@ -1,16 +1,14 @@
 import Link from "next/link";
 import styled from "styled-components";
 
-import { media } from "@shared/styles/media";
+import { media, theme } from "@shared/styles";
 import { formatCurrency } from "@shared/lib/currency";
 
 import type { CatalogPhone } from "../types/catalog.types";
 
-const BORDER = "0.5px solid #000000";
-
 const Card = styled(Link)`
-  border-bottom: ${BORDER};
-  border-right: ${BORDER};
+  border-bottom: ${theme.borders.thin};
+  border-right: ${theme.borders.thin};
   aspect-ratio: 1 / 1.2;
   box-sizing: border-box;
   display: flex;
@@ -25,7 +23,7 @@ const Card = styled(Link)`
 
   ${media.hoverDesktop} {
     &::before {
-      background: #000000;
+      background: ${theme.colors.primary};
       bottom: 0;
       content: "";
       left: 0;
@@ -44,7 +42,7 @@ const Card = styled(Link)`
 
     &:hover span,
     &:hover strong {
-      color: #ffffff;
+      color: ${theme.colors.primaryText};
     }
 
     &:not(:hover) span,
@@ -64,9 +62,9 @@ const ImageFrame = styled.div`
   display: flex;
   flex: 1;
   justify-content: center;
-  margin: 0 16px;
+  margin: 0 1rem;
   overflow: hidden;
-  padding-top: 16px;
+  padding-top: 1rem;
   position: relative;
   width: auto;
   z-index: 1;
@@ -74,7 +72,7 @@ const ImageFrame = styled.div`
 
 const TextBlock = styled.div`
   margin-top: auto;
-  padding: 16px;
+  padding: 1rem;
   position: relative;
   z-index: 1;
 `;
@@ -94,8 +92,8 @@ const ImageFallback = styled.span`
 `;
 
 const Brand = styled.span`
-  color: #666666;
-  font-size: 10px;
+  color: ${theme.colors.mutedText};
+  font-size: ${theme.fontSize.xs};
   letter-spacing: 0;
   line-height: 100%;
   text-transform: uppercase;
@@ -107,13 +105,13 @@ const NamePriceRow = styled.div`
   display: flex;
   gap: 0.5rem;
   justify-content: space-between;
-  margin-top: 5px;
+  margin-top: 0.3125rem;
   min-width: 0;
 `;
 
 const Name = styled.strong`
-  color: #000000;
-  font-size: 12px;
+  color: ${theme.colors.primary};
+  font-size: ${theme.fontSize.sm};
   letter-spacing: 0;
   line-height: 100%;
   text-transform: uppercase;
@@ -123,7 +121,7 @@ const Name = styled.strong`
 
 const Price = styled.span`
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: ${theme.fontSize.sm};
   letter-spacing: 0;
   line-height: 100%;
   text-align: right;

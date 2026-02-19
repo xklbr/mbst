@@ -21,5 +21,7 @@ export default function StyledComponentsRegistry({
     return <>{children}</>;
   }
 
-  return <StyleSheetManager sheet={sheet.instance}>{children}</StyleSheetManager>;
+  return (
+    <StyleSheetManager sheet={sheet.instance}>{children}</StyleSheetManager>
+  );
 }

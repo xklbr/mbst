@@ -6,11 +6,11 @@ import styled from "styled-components";
 
 import { Icon, IconNameEnum, Logo } from "@shared/components/icons";
 import { useCart } from "@modules/cart/hooks/use-cart";
-import { media } from "@shared/styles/media";
+import { containerLayout, media, theme } from "@shared/styles";
 
 const Root = styled.header`
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  background: ${theme.colors.bg};
+  border-bottom: 1px solid ${theme.colors.border};
   display: flex;
   left: 0;
   padding: 0.75rem 0;
@@ -20,23 +20,17 @@ const Root = styled.header`
   z-index: 10;
 
   ${media.desktopUp} {
-    padding: 28px 0;
+    padding: 1.75rem 0;
   }
 `;
 
 const NavbarContainer = styled.div`
+  ${containerLayout}
   align-items: center;
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  max-width: 1200px;
-  padding: 0 1.25rem;
   width: 100%;
-
-  ${media.desktopUp} {
-    max-width: none;
-    padding: 0 100px;
-  }
 `;
 
 const Brand = styled(Link)`
@@ -56,9 +50,9 @@ const CartLink = styled(Link)`
 `;
 
 const CartCount = styled.span`
-  font-size: 16px;
+  font-size: ${theme.fontSize.base};
   letter-spacing: 0;
-  line-height: 16px;
+  line-height: 1rem;
 `;
 
 const IconMobile = styled.span`
@@ -89,7 +83,10 @@ export function AppNavbar() {
           <BrandLogo />
         </Brand>
         {!isCartPage && (
-          <CartLink href="/cart" aria-label="Open cart">
+          <CartLink
+            href="/cart"
+            aria-label={`Open cart, ${itemCount} item${itemCount !== 1 ? "s" : ""}`}
+          >
             <IconMobile>
               <Icon name={IconNameEnum.BAG_FILLED} alt="" size={18} />
             </IconMobile>

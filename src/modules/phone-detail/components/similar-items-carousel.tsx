@@ -3,7 +3,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 
-import { media } from "@shared/styles/media";
+import { media, theme } from "@shared/styles";
 import type { CatalogPhone } from "@modules/catalog";
 
 const SimilarSection = styled.section`
@@ -13,37 +13,29 @@ const SimilarSection = styled.section`
 `;
 
 const SimilarTitle = styled.h2`
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 20px;
-  font-weight: 300;
   line-height: 100%;
   margin: 0 auto 1.5rem;
-  max-width: 1200px;
-  padding: 0 1.25rem;
+  max-width: ${theme.layout.containerMaxWidth};
+  padding: 0 ${theme.layout.containerPaddingMobile};
   text-transform: uppercase;
 
-
   ${media.mobileOnly} {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 20px;
-    font-weight: 300;
-    letter-spacing: 0;
-    line-height: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 2.5rem;
   }
 
   ${media.desktopUp} {
     margin: 0 0 1rem;
     max-width: none;
-    padding: 0 100px;
+    padding: 0 ${theme.layout.containerPaddingDesktop};
   }
 `;
 
 const SimilarCarouselWrap = styled.div`
-  padding-left: 1.25rem;
+  padding-left: ${theme.layout.containerPaddingMobile};
 
   ${media.desktopUp} {
-    padding-left: 100px;
+    padding-left: ${theme.layout.containerPaddingDesktop};
   }
 `;
 
@@ -80,7 +72,7 @@ const SimilarGrid = styled.ul`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #000000;
+    background: ${theme.colors.primary};
     border-radius: 0;
   }
 `;
@@ -88,12 +80,10 @@ const SimilarGrid = styled.ul`
 const CARD_SIZE_MOBILE = 343;
 const CARD_SIZE_DESKTOP = 344;
 
-const BORDER = "0.5px solid #000000";
-
 const SimilarCard = styled.li`
-  border-bottom: ${BORDER};
-  border-right: ${BORDER};
-  border-top: ${BORDER};
+  border-bottom: ${theme.borders.thin};
+  border-right: ${theme.borders.thin};
+  border-top: ${theme.borders.thin};
   box-sizing: border-box;
   flex: 0 0 ${CARD_SIZE_MOBILE}px;
   height: ${CARD_SIZE_MOBILE}px;
@@ -104,7 +94,7 @@ const SimilarCard = styled.li`
   width: ${CARD_SIZE_MOBILE}px;
 
   &:first-child {
-    border-left: ${BORDER};
+    border-left: ${theme.borders.thin};
   }
 
   ${media.tabletUp} {
@@ -127,7 +117,7 @@ const SimilarLink = styled(Link)`
 
   ${media.hoverDesktop} {
     &::before {
-      background: #000000;
+      background: ${theme.colors.primary};
       bottom: 0;
       content: "";
       left: 0;
@@ -146,7 +136,7 @@ const SimilarLink = styled(Link)`
 
     &:hover span,
     &:hover strong {
-      color: #ffffff;
+      color: ${theme.colors.primaryText};
     }
 
     &:not(:hover) span,
@@ -164,15 +154,15 @@ const SimilarImageFrame = styled.div`
   justify-content: center;
   min-height: 0;
   overflow: hidden;
-  padding: 16px 16px 0;
+  padding: 1rem 1rem 0;
   position: relative;
   width: 100%;
   z-index: 1;
 `;
 
 const SimilarImage = styled.img`
-  height: 257px;
-  max-width: 312px;
+  height: 16.0625rem;
+  max-width: 19.5rem;
   object-fit: contain;
   opacity: 1;
   width: 100%;
@@ -184,7 +174,7 @@ const SimilarInfo = styled.div`
   flex-shrink: 0;
   gap: 0.5rem;
   justify-content: space-between;
-  padding: 16px;
+  padding: 1rem;
   position: relative;
   z-index: 1;
 `;
@@ -196,24 +186,24 @@ const SimilarTextBlock = styled.div`
 `;
 
 const SimilarBrand = styled.span`
-  color: #666666;
-  font-size: 10px;
+  color: ${theme.colors.mutedText};
+  font-size: ${theme.fontSize.xs};
   letter-spacing: 0;
   line-height: 100%;
   text-transform: uppercase;
 `;
 
 const SimilarName = styled.strong`
-  color: #000000;
-  font-size: 12px;
+  color: ${theme.colors.primary};
+  font-size: ${theme.fontSize.sm};
   letter-spacing: 0;
   line-height: 100%;
   text-transform: uppercase;
 `;
 
 const SimilarPrice = styled.span`
-  color: #000000;
-  font-size: 12px;
+  color: ${theme.colors.primary};
+  font-size: ${theme.fontSize.sm};
   letter-spacing: 0;
   line-height: 100%;
   margin-top: 0.25rem;
@@ -239,7 +229,12 @@ export function SimilarItemsCarousel({ phones }: SimilarItemsCarouselProps) {
                   {item.imageUrl ? (
                     <SimilarImage alt={item.name} src={item.imageUrl} />
                   ) : (
-                    <span style={{ color: "#6b7280", fontSize: "0.7rem" }}>
+                    <span
+                      style={{
+                        color: theme.colors.mutedText,
+                        fontSize: "0.7rem",
+                      }}
+                    >
                       No image
                     </span>
                   )}

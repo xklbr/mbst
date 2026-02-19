@@ -1,18 +1,20 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 
-import { media } from "@shared/styles/media";
+import { media, theme } from "@shared/styles";
 
 const Root = styled.main`
   margin: 0 auto;
-  max-width: 1200px;
-  padding: 1.25rem;
-  padding-top: calc(3.5rem + 1.25rem);
+  max-width: ${theme.layout.containerMaxWidth};
+  padding: ${theme.layout.containerPaddingMobile};
+  padding-top: calc(
+    ${theme.layout.navbarHeightMobile} + ${theme.layout.containerPaddingMobile}
+  );
 
   ${media.desktopUp} {
     max-width: none;
-    padding: 2rem 100px;
-    padding-top: calc(85px + 2rem);
+    padding: 2rem ${theme.layout.containerPaddingDesktop};
+    padding-top: calc(${theme.layout.navbarHeightDesktop} + 2rem);
   }
 `;
 

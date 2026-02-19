@@ -2,6 +2,8 @@
 
 import styled from "styled-components";
 
+import { theme } from "@shared/styles/theme";
+
 export type ButtonVariant = "primary" | "secondary";
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -9,22 +11,23 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 export const Button = styled.button<{ $variant?: ButtonVariant }>`
-  background: ${({ $variant }) => ($variant === "secondary" ? "#ffffff" : "#111111")};
-  border: 1px solid #111111;
-  color: ${({ $variant }) => ($variant === "secondary" ? "#111111" : "#ffffff")};
+  background: ${({ $variant }) =>
+    $variant === "secondary" ? theme.colors.bg : theme.colors.primary};
+  border: 1px solid ${theme.colors.primary};
+  color: ${({ $variant }) =>
+    $variant === "secondary" ? theme.colors.primary : theme.colors.primaryText};
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: inherit;
-  font-size: 16px;
-  height: 48px;
+  font-size: ${theme.fontSize.base};
+  height: 3rem;
   letter-spacing: 0.02em;
-  padding: 5px 7px;
+  padding: 0.3125rem 0.4375rem;
   text-transform: uppercase;
   transition: all 0.2s ease;
   width: 100%;
-  max-width: 361px;
+  max-width: 22.5625rem;
 
   &:disabled {
     background: #f3f4f6;

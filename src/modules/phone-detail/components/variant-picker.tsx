@@ -1,7 +1,8 @@
 "use client";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
+import { theme } from "@shared/styles";
 import type {
   PhoneColorOption,
   PhoneStorageOption,
@@ -9,7 +10,7 @@ import type {
 
 const Root = styled.section`
   display: grid;
-  gap: 32px;
+  gap: 2rem;
 `;
 
 const Group = styled.section`
@@ -18,19 +19,17 @@ const Group = styled.section`
 `;
 
 const Label = styled.h2`
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 300;
+  font-size: ${theme.fontSize.sm};
   letter-spacing: 0;
   line-height: 100%;
-  margin: 0 0 20px;
+  margin: 0 0 1.25rem;
   text-transform: uppercase;
 `;
 
 const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 1rem;
   margin: 0;
   padding: 0;
 `;
@@ -44,26 +43,25 @@ const StorageRow = styled.div`
 `;
 
 const ColorName = styled.div`
-  color: #000000;
-  font-size: 12px;
+  color: ${theme.colors.primary};
+  font-size: ${theme.fontSize.sm};
   letter-spacing: 0;
   line-height: 100%;
-  margin-top: 8px;
+  margin-top: 0.5rem;
   min-height: 1.2em;
   text-align: left;
 `;
 
 const OptionButton = styled.button<{ $active: boolean }>`
   align-items: center;
-  background: #ffffff;
-  border: 1px solid ${({ $active }) => ($active ? "#000000" : "#CCCCCC")};
-  color: #000000;
+  background: ${theme.colors.bg};
+  border: 1px solid
+    ${({ $active }) => ($active ? theme.colors.primary : "#CCCCCC")};
+  color: ${theme.colors.primary};
   cursor: pointer;
   display: flex;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 300;
-  height: 48px;
+  font-size: ${theme.fontSize.sm};
+  height: 3rem;
   justify-content: center;
   letter-spacing: 0;
   line-height: 100%;
@@ -72,21 +70,21 @@ const OptionButton = styled.button<{ $active: boolean }>`
   position: relative;
   text-transform: uppercase;
   transition: all 0.2s ease;
-  width: 89px;
+  width: 5.5625rem;
   z-index: ${({ $active }) => ($active ? 1 : 0)};
 
   ${({ $active }) =>
     $active &&
-    `
-    box-shadow: inset 0 0 0 1px #000000;
-  `}
+    css`
+      box-shadow: inset 0 0 0 1px ${theme.colors.primary};
+    `}
 
   &:first-child {
     margin-left: 0;
   }
 
   &:hover {
-    background: #f9fafb;
+    background: ${theme.colors.card};
     ${({ $active }) => !$active && "border-color: #9ca3af; z-index: 1;"}
   }
 `;
@@ -94,17 +92,18 @@ const OptionButton = styled.button<{ $active: boolean }>`
 const ColorSwatchButton = styled.button<{ $color: string; $active: boolean }>`
   background: ${({ $color }) => $color};
   border: ${({ $active }) =>
-    $active ? "2px solid #000000" : "1px solid #CCCCCC"};
+    $active ? `2px solid ${theme.colors.primary}` : "1px solid #CCCCCC"};
   border-radius: 0;
-  box-shadow: inset 0 0 0 1px #ffffff;
+  box-shadow: inset 0 0 0 1px ${theme.colors.bg};
   cursor: pointer;
-  height: 24px;
+  height: 1.5rem;
   opacity: 1;
   padding: 0;
-  width: 24px;
+  width: 1.5rem;
 
   &:hover {
-    border-color: ${({ $active }) => ($active ? "#000000" : "#9ca3af")};
+    border-color: ${({ $active }) =>
+      $active ? theme.colors.primary : "#9ca3af"};
   }
 `;
 

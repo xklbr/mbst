@@ -8,6 +8,9 @@ import StyledComponentsRegistry from "@shared/styles/styled-components-registry"
 export const metadata: Metadata = {
   title: env.NEXT_PUBLIC_APP_NAME,
   description: env.NEXT_PUBLIC_APP_DESCRIPTION,
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

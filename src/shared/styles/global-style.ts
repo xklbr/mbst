@@ -44,4 +44,9 @@ export const GlobalStyle = createGlobalStyle`
   textarea {
     font: inherit;
   }
+
+  :focus-visible {
+    outline: 2px solid #000000;
+    outline-offset: 2px;
+  }
 `;

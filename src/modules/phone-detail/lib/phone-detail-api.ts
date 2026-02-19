@@ -35,5 +35,12 @@ export async function getSimilarPhones(
   phone: Pick<PhoneDetail, "similarProducts">,
   limit = 8,
 ): Promise<CatalogPhone[]> {
-  return phone.similarProducts.slice(0, limit);
+  const seen = new Set<string>();
+  return phone.similarProducts
+    .filter((p) => {
+      if (seen.has(p.id)) return false;
+      seen.add(p.id);
+      return true;
+    })
+    .slice(0, limit);
 }

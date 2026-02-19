@@ -48,7 +48,7 @@ describe("Cart flow integration", () => {
       </CartProvider>,
     );
 
-    const addButton = screen.getByRole("button", { name: "AÑADIR" });
+    const addButton = screen.getByRole("button", { name: "ADD" });
     expect(addButton).toBeDisabled();
 
     fireEvent.click(screen.getByRole("button", { name: "256GB" }));
@@ -66,7 +66,7 @@ describe("Cart flow integration", () => {
       expect(raw).toContain("phone-1");
     });
 
-    fireEvent.click(screen.getByRole("button", { name: "Delee" }));
+    fireEvent.click(screen.getByRole("button", { name: "Delete" }));
 
     expect(
       screen.getByRole("heading", { name: /Cart \(0\)/i }),

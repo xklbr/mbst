@@ -56,7 +56,7 @@ describe("PhoneDetailClient integration", () => {
   it("keeps add-to-cart disabled until color and storage are selected", () => {
     render(<PhoneDetailClient phone={phoneFixture} />);
 
-    const addButton = screen.getByRole("button", { name: "AÑADIR" });
+    const addButton = screen.getByRole("button", { name: "ADD" });
 
     expect(addButton).toBeDisabled();
     expect(screen.queryByText("Black")).not.toBeInTheDocument();
@@ -79,7 +79,7 @@ describe("PhoneDetailClient integration", () => {
 
     expect(screen.getByText("1299 EUR")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "AÑADIR" }));
+    fireEvent.click(screen.getByRole("button", { name: "ADD" }));
 
     expect(addItemMock).toHaveBeenCalledWith(
       expect.objectContaining({

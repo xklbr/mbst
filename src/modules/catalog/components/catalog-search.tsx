@@ -42,7 +42,7 @@ const ClearButton = styled.button`
   justify-content: center;
   padding: 0;
   position: absolute;
-  right: 6px;
+  right: 0.375rem;
   top: 50%;
   transform: translateY(-50%);
 

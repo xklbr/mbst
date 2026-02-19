@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
-import { media } from "@shared/styles/media";
-import { AppNavbar } from "@shared/components/layout/app-navbar";
-import { PageContainer } from "@shared/components/layout/page-container";
+import { containerLayout, media, theme } from "@shared/styles";
+import { AppNavbar, PageContainer } from "@shared/components/layout";
 
 import { CatalogCard } from "./catalog-card";
 import { CatalogSearch } from "./catalog-search";
@@ -10,28 +9,24 @@ import { getPhones } from "../lib/catalog-api";
 import type { CatalogPhone } from "../types/catalog.types";
 
 const FixedBar = styled.div`
-  background: #ffffff;
+  background: ${theme.colors.bg};
   left: 0;
   padding-bottom: 0.5rem;
   position: fixed;
   right: 0;
-  top: 3.5rem;
+  top: calc(${theme.layout.navbarHeightMobile} - 4px);
   z-index: 5;
 
   ${media.desktopUp} {
-    top: 85px;
+    top: calc(${theme.layout.navbarHeightDesktop} - 4px);
   }
 `;
 
 const FixedBarInner = styled.div`
+  ${containerLayout}
   margin: 0 auto;
-  max-width: 1200px;
-  padding: 1.25rem;
-
-  ${media.desktopUp} {
-    max-width: none;
-    padding: 1.25rem 100px;
-  }
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 `;
 
 const CatalogContent = styled.div`
@@ -54,15 +49,15 @@ const ResultBar = styled.section`
 `;
 
 const ResultCount = styled.p`
-  color: #4b5563;
+  color: ${theme.colors.text};
   font-size: 0.875rem;
   margin: 0;
   text-transform: uppercase;
 `;
 
 const Grid = styled.section`
-  border-left: 0.5px solid #000000;
-  border-top: 0.5px solid #000000;
+  border-left: ${theme.borders.thin};
+  border-top: ${theme.borders.thin};
   display: grid;
   gap: 0;
   grid-template-columns: 1fr;
@@ -76,17 +71,13 @@ const Grid = styled.section`
   }
 `;
 
-const EmptyState = styled.section`
-  border: 1px solid #e5e7eb;
-  color: #4b5563;
-  padding: 1rem;
-`;
-
 const ErrorState = styled.section`
   border: 1px solid #fecaca;
   color: #991b1b;
   padding: 1rem;
 `;
+
+const CATALOG_PAGE_SIZE = 20;
 
 type CatalogViewProps = {
   search?: string;
@@ -100,9 +91,11 @@ export async function CatalogView({ search = "" }: CatalogViewProps) {
 
   try {
     const response = await getPhones({
-      limit: 20,
+      limit: CATALOG_PAGE_SIZE + 1,
       search: normalizedSearch || undefined,
     });
+
+    console.log(response);
 
     phones = response.items;
     total = response.total;
@@ -129,9 +122,7 @@ export async function CatalogView({ search = "" }: CatalogViewProps) {
         <CatalogContent>
           {loadError ? (
             <ErrorState role="alert">{loadError}</ErrorState>
-          ) : phones.length === 0 ? (
-            null
-          ) : (
+          ) : phones.length === 0 ? null : (
             <Grid>
               {phones.map((phone) => (
                 <CatalogCard key={phone.id} phone={phone} />
